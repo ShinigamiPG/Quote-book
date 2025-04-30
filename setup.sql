@@ -12,5 +12,3 @@ CREATE TABLE quotes (
     quotes TEXT,
     added DATE
 );
-
-

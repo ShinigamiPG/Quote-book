@@ -60,6 +60,30 @@ app.post("/add", async (req, res) => {
   res.redirect("/")
 })
 
+app.post("/sort", async (req, res) => {
+  const sortType = req.body.sort
+  console.log(sortType)
+  let orderedQuery
+  if (sortType == "Title") {
+    orderedQuery = "SELECT works.id, works.isbn, works.title, works.published, quotes.quotes, quotes.added FROM quotes JOIN works ON quotes.isbn = works.isbn ORDER BY works.title;"
+  } else if (sortType == "Date") {
+    orderedQuery = "SELECT works.id, works.isbn, works.title, works.published, quotes.quotes, quotes.added FROM quotes JOIN works ON quotes.isbn = works.isbn ORDER BY quotes.added DESC;"
+  }
+  let myBooks = []
+    try {
+        const result = await db.query(orderedQuery);
+        myBooks = result.rows
+        console.log(myBooks)
+      } catch (error) {
+        console.log("Error", error.message)
+      }
+      res.render("index.ejs", {
+        books: myBooks,
+        selectedSort: sortType
+      });
+      
+})
+
 app.post("/edit", async (req, res) => {
   const inputISBN = req.body.updatedItemISBN
   const inputQuote = req.body.updatedItemQuotes

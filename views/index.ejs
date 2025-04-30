@@ -18,6 +18,22 @@
     </form>
   </div>
 
+  <div class="sortdiv">
+    <form action="/sort" method="POST" id="sortForm">
+      <label>Sort by:</label>
+
+      <label>
+        <input type="radio" name="sort" value="Title" onclick="document.getElementById('sortForm').submit()" <%= typeof selectedSort !== 'undefined' && selectedSort === 'Title' ? 'checked' : '' %>> Title
+      </label>
+    
+      <label>
+        <input type="radio" name="sort" value="Date" onclick="document.getElementById('sortForm').submit()" <%= typeof selectedSort !== 'undefined' && selectedSort === 'Date' ? 'checked' : '' %>> Date-added
+      </label>
+    
+    </form>
+    
+  </div>
+
   <div class="container">
     <% books.forEach(function(book) { %>
         <div class="book">
