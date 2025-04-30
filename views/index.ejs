@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Display Image</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <h1>Fav Book Quotes</h1>
+  <div class="input">
+    <form class="item" action="/add" method="post">
+      <input type="search" name="addISBN" placeholder="Enter ISBN to add book">
+      <button class="add" type="submit" name="list">Add</button>
+    </form>
+  </div>
+
+  <div class="container">
+    <% books.forEach(function(book) { %>
+        <div class="book">
+          <div class = "cover">
+            <h3><%= book.title %></h3>
+            <img id="myImage" src="https://covers.openlibrary.org/b/isbn/<%= book.isbn%>-L.jpg" alt="My Photo" height="200">
+          </div>
+
+          <div class="quote-box">
+              <form class="edit" action="/edit" method="post">
+                <input type="hidden" name="updatedItemISBN" value="<%= book.isbn %>">
+            
+                <p id="title<%=book.id%>" onclick="makeEditable('<%=book.id%>')">
+                  <%= book.quotes %>
+                </p>
+            
+                <input id="input<%=book.id%>" type="text" name="updatedItemQuotes" value="<%=book.quotes%>"
+                  autocomplete="off" hidden maxlength="80"/>
+            
+                  <button id="done<%=book.id%>" class="edit" type="submit" hidden>  Save  </button>
+
+              </form>
+          </div>
+          <div class="delete"> 
+            <form action="/delete" method="POST">
+              <input type="hidden" name="deleteISBN" value="<%= book.isbn %>">
+              <button type="submit" style="background: none; border: none; padding: 0;">
+                <img class="icon" src="/assets/swordcross.svg" alt="delete">
+              </button>
+            </form> 
+          </div>
+        </div>       
+        <p class="dates"> Published: <%= book.published.toISOString().split('T')[0]  %> &nbsp;&nbsp;&nbsp;&nbsp; Added: <%= book.added.toISOString().split('T')[0] %></p>
+        <hr>
+
+      <% }); %>
+    <a href="/create">
+    
+    </a>
+</div>
+
+<script>
+  function makeEditable(id) {
+    // Hide the <p>
+    const p = document.getElementById(`title${id}`);
+    p.hidden = true;
+
+    // Show the input
+    const input = document.getElementById(`input${id}`);
+    input.hidden = false;
+    input.focus();
+
+    // Show the save button
+    const button = document.getElementById(`done${id}`);
+    button.hidden = false;
+  }
+</script>
+
+</body>
+</html>
