@@ -8,4 +8,4 @@ To begin :
 2. In your local database create tables using the queries in [`setup.sql`](https://github.com/ShinigamiPG/Quote-book/blob/master/setup.sql) 
 3. Use `npm i` to install dependencies and `node index.js` to start application.
 
-Use the address "http://localhost:3000/" on your browser to use the app.  
+Use the address http://localhost:3000/ on your browser to use the app.  
